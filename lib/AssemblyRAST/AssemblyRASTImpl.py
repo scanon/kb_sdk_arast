@@ -11,6 +11,7 @@ import pprint
 import json
 import tempfile
 import re
+import time
 from datetime import datetime
 from pprint import pprint, pformat
 
@@ -131,7 +132,7 @@ This sample module contains multiple assembly methods:
         token = ctx['token']
 
         os.environ["KB_AUTH_TOKEN"] = token
-        os.environ["ARAST_URL"] = '140.221.67.209' # testing on torino
+        os.environ["ARAST_URL"] = 'localhost' # testing on torino
 
         ws = workspaceService(self.workspaceURL, token=token)
         objects = ws.get_objects([{'ref': params['workspace_name']+'/'+params['read_library_name']}])
@@ -175,7 +176,7 @@ This sample module contains multiple assembly methods:
         ar_log = subprocess.check_output(cmd)
 
         self.log(console, ar_log)
-
+        time.sleep(5)
         cmdstr = 'ar-get -j {} -w -p | ar-filter -l {} > {}'.format(job_id, min_contig_len, output_contigs)
         logger.debug('CMD: {}'.format(cmdstr))
         subprocess.check_call(cmdstr, shell=True)
